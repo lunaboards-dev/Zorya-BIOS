@@ -100,6 +100,6 @@ for i=1, #dl_files do
 	end
 end
 
-status("Setup complete! Rebooting in 5 seconds...")
+status("Setup complete! Rebooting in 3 seconds...")
 local start = os.clock()
-while true do if (os.clock() > start+5) then computer.shutdown(true) end end
+while true do if (os.clock() > start+3) then computer.shutdown(true) end end
