@@ -36,11 +36,11 @@ else
 				local inet=p(l("internet")())
 				if not inet then error("no net, can't setup") end
 				local ih=inet.request("https://raw.githubusercontent.com/Adorable-Catgirl/Zorya-BIOS/master/update/setup.lua")
-				if (ih.finishConnection()) then
+				--if (ih.finishConnection()) then
 					load(ih.read())(addr)
-				else
-					error("failed to connect")
-				end
+				--else
+				--	error("failed to connect")
+				--end
 				return true
 			end
 		end)
