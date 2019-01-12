@@ -14,9 +14,8 @@ end
 
 local function establish_connection(dev, ...)
 	for i=1, 3 do
-		status("Trying connect (Try "..i.." of 3)")
 		local req, err = dev.request(...)
-		if not dev and err then status("E: "..err) else return req end
+		if not dev and err then else return req end
 	end
 	error("couldn't connect", 0)
 end
