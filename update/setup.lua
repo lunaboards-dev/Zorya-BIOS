@@ -62,7 +62,7 @@ for i=1, #dl_files do
 	if (req.finishConnect()) then
 		local data = req.read() --So we aren't killed.
 		status("Installing "..dl_files[i])
-		local hand = fs.open(dl_files[i][2]), "w")
+		local hand = fs.open(dl_files[i][2], "w")
 		fs.write(hand, data)
 		fs.close(hand)
 	else
