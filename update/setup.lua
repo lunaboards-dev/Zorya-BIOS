@@ -35,6 +35,25 @@ local function status(msg)
     end
 end
 
+local function get_data(req)
+	local code = ""
+	while true do
+		local data, reason = req.read()
+		if not data then req.close(); if reason then error(reason, 0) end break end
+		code = code .. data
+	end
+	return code
+end
+
+local function establish_connection(dev, ...)
+	for i=1, 3 do
+		status("Trying connect (Try "..i.." of 3)")
+		local req, err = dev.request(...)
+		if not dev and err then status("E: "..err) else return req end
+	end
+	error("couldn't connect", 0)
+end
+
 status("Zorya Init setup.")
 local dl_files = {
 	{"https://raw.githubusercontent.com/Adorable-Catgirl/Zorya-BIOS/master/zorya-modules/boot.lua", "zorya-modules/boot.lua"},
@@ -58,10 +77,10 @@ fs.makeDirectory("zorya-cfg")
 status("Downloading required libraries...")
 for i=1, #dl_files do
 	status("> "..dl_files[i][2])
-	local req = net.request(dl_files[i][1])
-	if (req.finishConnect()) then
-		local data = req.read() --So we aren't killed.
-		status("Installing "..dl_files[i])
+	local req = establish_connection(net, dl_files[i][1])
+	if (true) then
+		local data = get_data(req) --So we aren't killed.
+		status("Installing "..dl_files[i][2])
 		local hand = fs.open(dl_files[i][2], "w")
 		fs.write(hand, data)
 		fs.close(hand)
