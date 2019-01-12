@@ -8,7 +8,7 @@ local proxy, list=component.proxy, component.list
 
 --Time to actually get some display, thanks to our trusty GPU.
 local gpu = proxy(list("gpu")())
-local screen = proxy(list("screen")())
+local screen = list("screen")()
 
 gpu.bind(screen)
 --And now we have output.
