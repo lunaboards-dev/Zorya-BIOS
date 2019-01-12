@@ -9,6 +9,7 @@ local function get_data(req)
 		if not data then req.close(); if reason then error(reason, 0) end break end
 		code = code .. data
 	end
+	req.close()
 	return code
 end
 
