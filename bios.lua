@@ -37,7 +37,7 @@ else
 				if not inet then error("no net, can't setup") end
 				local ih=inet.request("https://raw.githubusercontent.com/Adorable-Catgirl/Zorya-BIOS/master/update/setup.lua")
 				if (ih.finishConnection()) then
-					loadstring(ih.read())(addr)
+					load(ih.read())(addr)
 				else
 					error("failed to connect")
 				end
@@ -75,6 +75,7 @@ if (not i(addr, "exists", "zorya-modules/boot.lua")) then
 	status("Error: zorya-modules/boot.lua not found. Trying to load OpenOS...")
 	return ed("filesystem", function(dev)
 		if i(dev, "exists", "init.lua") then
+			computer.getBootAddress = function()return dev end
 			local h = i(dev, "open", "init.lua")
 			return load(t(dev, h), "=init.lua")()
 		end
