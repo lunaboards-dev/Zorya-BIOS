@@ -19,7 +19,7 @@ if not pretty then error(err) else pretty = pretty() end
 local fs = component.proxy(envs.device)
 
 if (not fs.exists("zorya-cfg/.zoryarc")) then
-	envs.boot[#envs.boot+1] = {"Update Zorya and Init Modules", "netboot", "https://raw.githubusercontent.com/Adorable-Catgirl/Zorya-BIOS/master/update/setup.lua", {}}
+	envs.boot[#envs.boot+1] = {"Update Zorya and Init Modules", "netboot", "https://raw.githubusercontent.com/Adorable-Catgirl/Zorya-BIOS/master/update/setup.lua", {envs.device}}
 	local hand = fs.open("zorya-cfg/.zoryarc", "w")
 	local str = pretty(envs.boot, "\n", "\t", " ", json.encode)
 	fs.write(hand, str)
