@@ -2,6 +2,25 @@ local args = {...}
 local envs = args[1]
 envs.boot[#envs.boot+1] = {"Network Boot", "netboot", "", {}}
 
+local function get_data(req)
+	local code = ""
+	while true do
+		local data, reason = req.read()
+		if not data then req.close(); if reason then error(reason, 0) end break end
+		code = code .. data
+	end
+	return code
+end
+
+local function establish_connection(dev, ...)
+	for i=1, 3 do
+		status("Trying connect (Try "..i.." of 3)")
+		local req, err = dev.request(...)
+		if not dev and err then status("E: "..err) else return req end
+	end
+	error("couldn't connect", 0)
+end
+
 envs.hand["netboot"] = function(svc, args)
 	if svc == "" then
 		while true do
@@ -19,15 +38,13 @@ envs.hand["netboot"] = function(svc, args)
 			end
 		end
 	end
-	local req = envs.net.request(svc)
-	if (req.finishConnect()) then
-		local dat = req.read()
-		local func, err = load(dat, "=netboot.lua")
-		if not func and err then
-			envs.gpu.set(1, 1, "ERROR: "..err)
-			while true do computer.pullSignal() end
-		else
-			return func()
-		end
+	local req = establish_connection(envs.net, svc)
+	local dat = get_data(req)
+	local func, err = load(dat, "=netboot.lua")
+	if not func and err then
+		envs.gpu.set(1, 1, "ERROR: "..err)
+		while true do computer.pullSignal() end
+	else
+		return func(table.unpack(args))
 	end
 end
