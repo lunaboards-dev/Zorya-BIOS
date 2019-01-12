@@ -52,8 +52,8 @@ local dl_files = {
 status("Setting up internet card.")
 local net = proxy(list("internet")())
 local fs = proxy(args[1])
-fs.mkdir("zorya-modules")
-fs.mkdir("zorya-cfg")
+fs.makeDirectory("zorya-modules")
+fs.makeDirectory("zorya-cfg")
 
 status("Downloading required libraries...")
 for i=1, #dl_files do
