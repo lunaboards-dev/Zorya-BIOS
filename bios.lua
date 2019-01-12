@@ -14,6 +14,25 @@ local function a2b(addr)
 	end
 	return baddr
 end
+
+local function get_data(req)
+	local code = ""
+	while true do
+		local data, reason = req.read()
+		if not data then req.close(); if reason then error(reason, 0) end break end
+		code = code .. data
+	end
+	return code
+end
+
+local function establish_connection(dev, ...)
+	for i=1, 3 do
+		local req, err = dev.request(...)
+		if dev then return req end
+	end
+	error("couldn't connect", 0)
+end
+
 local zm="zorya-modules"
 local eeprom=p(l("eeprom")())
 local dat = eeprom.getData()
@@ -35,9 +54,9 @@ else
 				eeprom.setData(a2b(dev))
 				local inet=p(l("internet")())
 				if not inet then error("no net, can't setup") end
-				local ih=inet.request("https://raw.githubusercontent.com/Adorable-Catgirl/Zorya-BIOS/master/update/setup.lua")
+				local ih=establish_connection(inet, "https://raw.githubusercontent.com/Adorable-Catgirl/Zorya-BIOS/master/update/setup.lua")
 				--if (ih.finishConnection()) then
-					load(ih.read())(addr)
+					load(get_data(ih))(addr)
 				--else
 				--	error("failed to connect")
 				--end
