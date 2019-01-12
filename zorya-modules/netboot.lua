@@ -15,7 +15,7 @@ end
 local function establish_connection(dev, ...)
 	for i=1, 3 do
 		local req, err = dev.request(...)
-		if not dev and err then else return req end
+		if req then return req end
 	end
 	error("couldn't connect", 0)
 end
