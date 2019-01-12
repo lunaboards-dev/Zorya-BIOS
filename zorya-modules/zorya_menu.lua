@@ -46,6 +46,7 @@ local function redraw()
 		envs.gpu.set(2, i+2, short)
 	end
 end
+redraw()
 
 while true do
 	local sig, _, key, code = computer.pullSignal()
