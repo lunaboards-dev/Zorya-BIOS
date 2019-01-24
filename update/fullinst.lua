@@ -72,7 +72,7 @@ local dl_files = {
 
 status("Setting up internet card.")
 local net = proxy(list("internet")())
-local fs = proxy(args[1] or list("filesytem")())
+local fs = proxy(args[1] or list("filesystem")())
 if (fs.getLabel() == "tmpfs") then
   status("Can't install to tmpfs, retrying...")
   fs = proxy(list("filesystem")[2])
