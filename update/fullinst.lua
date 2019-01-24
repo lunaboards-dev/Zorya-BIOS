@@ -4,6 +4,7 @@
 local args = {...}
 
 local component = component or require("component")
+local computer = computer or require("computer") --so it works in OpenOS.
 local proxy, list=component.proxy, component.list
 
 local rom = proxy(list("eeprom")())
