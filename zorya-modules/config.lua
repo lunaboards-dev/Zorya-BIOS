@@ -28,5 +28,5 @@ else
 	local hand = fs.open("zorya-cfg/.zoryarc", "r")
 	local dat = fs.read(hand, math.huge)
 	envs.boot = json.decode(dat)
-	fs.close(hand, str)
+	fs.close(hand)
 end
