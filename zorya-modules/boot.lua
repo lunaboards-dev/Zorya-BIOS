@@ -19,7 +19,7 @@ local function loadfile(addr, file)
 	return load(buffer, "=" .. file, "bt", _G)
 end
 --Also, we need to load all our components here.
-local zorya = proxy(args[1])
+local zy = proxy(args[1])
 local inet = list("internet")() --We don't *need* internet.
 inet = inet and proxy(inet)
 
@@ -65,16 +65,11 @@ envs.h = h
 envs.cls = cls
 envs.status = status
 envs.loadfile = loadfile
-envs.device = zorya.address
-for _, file in ipairs(zorya.list("zorya-modules")) do
+envs.device = zy.address
+for _, file in ipairs(zy.list("zorya-modules")) do
 	status("Loading zorya-modules/"..file)
-	if (file ~= "zorya_menu.lua" and file ~= "boot.lua" and file ~= "config.lua") then
-		local func, err = loadfile(zorya.address, "zorya-modules/"..file)
+	if (file ~= "boot.lua") then
+		local func, err = loadfile(zy.address, "zorya-modules/"..file)
 		if not func then status(err) else func(envs)end
 	end
 end
-local func, err = loadfile(zorya.address, "zorya-modules/config.lua")
-if not func then status(err) else func(envs)end
-
-local func, err = loadfile(zorya.address, "zorya-modules/zorya_menu.lua")
-if not func then status(err) else func(envs)end

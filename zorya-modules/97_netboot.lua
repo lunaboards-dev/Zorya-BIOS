@@ -1,6 +1,8 @@
 local args = {...}
 local envs = args[1]
-envs.boot[#envs.boot+1] = {"Network Boot", "netboot", "", {}}
+envs.scan[#envs.scan+1] = function()
+	envs.boot[#envs.boot+1] = {"Network Boot", "netboot", "", {}}
+end
 
 local function get_data(req)
 	local code = ""
