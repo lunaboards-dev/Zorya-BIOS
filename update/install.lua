@@ -59,7 +59,6 @@ local inet = proxy(list("internet")())
 
 function writeFile(fs, path, data)
 	local hand = fs.open(path, "w")
-	proxy(list("sandbox")()).log(hand, #data)
 	fs.write(hand, data)
 	fs.close(hand)
 end
@@ -105,7 +104,6 @@ setBar(0)
 for i=1, #files do
 	setStatus("Downloading "..files[i][2].." (file "..i.." of "..#files..")")
 	local dat = getGithub(files[i][1])
-	proxy(list("sandbox")()).log(#dat)
 	writeFile(fs, files[i][2], dat)
 	setBar((100/#files)*i)
 end
