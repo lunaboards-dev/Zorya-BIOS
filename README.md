@@ -12,8 +12,9 @@ The Zorya BIOS comes built in with support for booting OpenOS, Plan9k, and Tsuki
 Zorya is **NOT** OEFI compliant yet. Zorya currently only provides a compatibility tool for OEFI, and it's not 100% compatible.
 
 OEFI library support:
+
 | Method | Status | Notes |
-|---|---|---|
+| --- | --- | --- |
 | `oefi.getApplications()` | Supported | Not all applications can be booted correctly |
 | `oefi.getAPIVersion()` | Supported | Returns 0.5 instead of 1. |
 | `oefi.getImplementationName()` | Supported | Returns `Zorya-Compat` |
@@ -24,8 +25,9 @@ OEFI library support:
 | `computer.setBootAddress(addr)` | Supported | Does nothing. |
 
 Zorya also extends OEFI with a few extra methods:
+
 | Method | Returns | Notes |
-|---|---|---|
+| --- | --- | --- |
 | `zorya.getEntries()` | `table` | The table contains the raw data of the zoryarc boot entries. |
 | `zorya.addEntry(name:string,handler:string,fs:string,...)` | nothing | Adds an entry to the zoryarc file. |
 | `zorya.getVersion()` | `number` | The same as `_ZVER` |
