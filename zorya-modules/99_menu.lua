@@ -73,7 +73,7 @@ while true do
 			local hand = envs.boot[sel][2]
 			table.remove(envs.boot[sel], 1)
 			table.remove(envs.boot[sel], 1)
-			return envs.hand[hand](table.unpack(envs.boot[sel]))
+			envs.hand[hand](table.unpack(envs.boot[sel]))
 		end
 	end
 	redraw()
