@@ -16,7 +16,7 @@ OEFI library support:
 | Method | Status | Notes |
 | --- | --- | --- |
 | `oefi.getApplications()` | Supported | Not all applications can be booted correctly |
-| `oefi.getAPIVersion()` | Supported | Returns 0.5 instead of 1. |
+| `oefi.getAPIVersion()` | Supported | Returns 2. |
 | `oefi.getImplementationName()` | Supported | Returns `Zorya-Compat` |
 | `oefi.getImplementationVersion()` | Supported | Returns the version of the Zorya bootloader |
 | `oefi.returnToOEFI()` | Implemented | Will forcefully exit and crash. |
