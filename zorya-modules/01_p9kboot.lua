@@ -9,7 +9,7 @@ envs.scan[#envs.scan+1] = function()
 			if (#subdir > 0) then
 				for i=1, #subdir do
 					if (not comp.invoke(fs, "isDirectory", "boot/kernel/"..subdir[i])) then
-						envs.boot[#envs.boot+1] = {"(Plan9K) "..subdir[i].." on "..fs:sub(3), "p9k", fs, subdir[i], {}}
+						envs.boot[#envs.boot+1] = {"(Plan9K) "..subdir[i].." on "..fs:sub(1,3), "p9k", fs, subdir[i], {}}
 					end
 				end
 			end

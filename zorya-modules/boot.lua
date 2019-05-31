@@ -52,11 +52,13 @@ local function status(msg)
     end
 end
 
+function zorya.getMode()return"zorya"end
 local envs = {}
 
 envs.hand = {}
 envs.boot = {}
 envs.args = {}
+envs.scan = {}
 envs.net = inet
 envs.gpu = gpu
 envs.cls = cls

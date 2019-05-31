@@ -14,6 +14,8 @@ envs.scan[#envs.scan+1] = function()
 end
 
 envs.hand["oefi"] = function(fs, file)
+
+    function zorya.getMode()return"oefi"end
 	local c = coroutine.create(oefi.execOEFIApp﻿)
 	coroutine.start(fs, file)
 	while true do
