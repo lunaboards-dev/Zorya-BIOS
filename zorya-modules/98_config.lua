@@ -2,6 +2,12 @@ local args = {...}
 local envs = args[1]
 
 local component = component or require("component")
+local json, err = envs.loadfile(envs.device, "zorya-cfg/json.lua")
+local pretty, err = envs.loadfile(envs.device, "zorya-cfg/pretty.lua")
+if not json then error(err) else json = json() end
+if not pretty then error(err) else pretty = pretty() end
+
+local fs = component.proxy(envs.device)
 
 --envs.boot[#envs.boot+1] = {"Zorya BIOS configuration", "cfg", {}}
 
@@ -27,12 +33,6 @@ end
 
 --Just check for our config files. Also, this file is loaded second to
 --last, so we can both make a .zoryarc and/or replace the boot list.
-local json, err = envs.loadfile(envs.device, "zorya-cfg/json.lua")
-local pretty, err = envs.loadfile(envs.device, "zorya-cfg/pretty.lua")
-if not json then error(err) else json = json() end
-if not pretty then error(err) else pretty = pretty() end
-
-local fs = component.proxy(envs.device)
 
 if (not fs.exists("zorya-cfg/.zoryarc")) then
 	scan()
