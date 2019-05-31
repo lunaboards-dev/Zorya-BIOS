@@ -32,7 +32,7 @@ function oefi.getImplementationVersion()
 end
 
 function oefi.returnToOEFI()
-	computer.pushSignal("__ZORYA_RETURN")
+	computer.shutdown(true)
 end
 
 function oefi.execOEFIApp(fs, path)
