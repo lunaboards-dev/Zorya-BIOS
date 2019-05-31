@@ -2,7 +2,7 @@
 
 An advanced BIOS for OpenComputers. There are two ways to install/update:
 
-  * Run `update/fullinst.lua`
+  * Run `update/install.lua`
   * Using the Zorya BIOS Update option.
 
 ## Features
