@@ -2,8 +2,8 @@
 
 An advanced BIOS for OpenComputers. There are two ways to install/update:
 
-* Run `update/fullinst.lua`
-* Using the Zorya BIOS Update option.
+  * Run `update/fullinst.lua`
+  * Using the Zorya BIOS Update option.
 
 ## Features
 The Zorya BIOS comes built in with support for booting OpenOS, Plan9k, and Tsuki Kernel. Other OSes can install their own boot modules. The BIOS also has support for network booting and booting Netinstall scripts.
