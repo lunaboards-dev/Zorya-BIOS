@@ -9,7 +9,7 @@ An advanced BIOS for OpenComputers. There are two ways to install/update:
 The Zorya BIOS comes built in with support for booting OpenOS, Plan9k, and Tsuki Kernel. Other OSes can install their own boot modules. The BIOS also has support for network booting and booting Netinstall scripts.
 
 ## OEFI Compliance
-Zorya is **NOT** OEFI compliant yet. Zorya currently only provides a compatibility tool for OEFI, and it's not 100% compatible.
+Zorya is *almost* OEFI complient. Report any problems with OEFI.
 
 OEFI library support:
 
