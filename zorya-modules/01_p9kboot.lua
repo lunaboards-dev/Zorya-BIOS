@@ -19,5 +19,5 @@ end
 
 envs.hand["p9k"] = function(fs, kern, args)
 	computer.getBootAddress = function() return fs end
-	return envs.loadfile(fs, "boot/kernel/"..kern)(args)
+	envs.loadfile(fs, "boot/kernel/"..kern)(args)
 end

@@ -1,14 +1,14 @@
 --This simply adds OEFI support where there wasn't before. Also adds our zorya lib.
-
+local component = component or require("component")
 local envs = ...
 
 oefi = {}
 
 function oefi.getApplications()
 	local apps = {}
-	for fs in component.list("filesystems") do
+	for fs in component.list("filesystem") do
 		if component.invoke(fs, "isDirectory", ".efi") then
-			for file in component.invoke(fs, "list", ".efi") do
+			for _, file in ipairs(component.invoke(fs, "list", ".efi")) do
 				apps[#apps+1] = {
 					drive = fs,
 					path = ".efi/"..file
@@ -35,8 +35,8 @@ function oefi.returnToOEFI()
 	computer.shutdown(true)
 end
 
-function oefi.execOEFIApp(fs, path)
-	return loadfile(fs,path)()
+function oefi.execOEFIApp(fs, path, args)
+	return envs.loadfile(fs,path)(args)
 end
 
 function zorya.getVersion()

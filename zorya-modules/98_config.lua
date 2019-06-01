@@ -22,11 +22,12 @@ envs.hand["cfg"] = function(args)
 end
 
 envs.hand["rescan"] = function(args)
+	envs.boot = {}
 	scan()
 	envs.boot[#envs.boot+1] = {"Update Zorya and Init Modules", "netboot", "https://raw.githubusercontent.com/Adorable-Catgirl/Zorya-BIOS/master/update/setup.lua", {envs.device}}
 	envs.boot[#envs.boot+1] = {"Rescan for OSes", "rescan", ""}
 	local hand = fs.open("zorya-cfg/.zoryarc", "w")
-	local str = pretty({boot_entries=envs.boot,timeout=10000,default=1,bgcolor=0x00000000,fgcolor=0x00000000}, "\n", "\t", " ", json.encode)
+	local str = pretty(envs.cfg, "\n", "    ", " ", json.encode)
 	fs.write(hand, str)
 	fs.close(hand)
 end
@@ -39,7 +40,7 @@ if (not fs.exists("zorya-cfg/.zoryarc")) then
 	envs.boot[#envs.boot+1] = {"Update Zorya and Init Modules", "netboot", "https://raw.githubusercontent.com/Adorable-Catgirl/Zorya-BIOS/master/update/install.lua", {envs.device}}
 	envs.boot[#envs.boot+1] = {"Rescan for OSes", "rescan", ""}
 	local hand = fs.open("zorya-cfg/.zoryarc", "w")
-	local str = pretty({boot_entries=envs.boot,timeout=10000,default=1,bgcolor=0x00000000,fgcolor=0x00000000}, "\n", "\t", " ", json.encode)
+	local str = pretty({boot_entries=envs.boot,timeout=10,default=1,bgcolor=0,fgcolor=0xFFFFFF}, "\n", "    ", " ", json.encode)
 	fs.write(hand, str)
 	fs.close(hand)
 else

@@ -5,26 +5,35 @@ local border_chars = {
 	"┌", "─", "┐", "│", "└", "┘"
 }
 local w, h = envs.w, envs.h
+envs.gpu.setBackground(envs.cfg.bgcolor)
+envs.gpu.setForeground(envs.cfg.fgcolor)
 envs.cls()
 --Draw some things
 envs.gpu.set((w/2)-5, 1, "Zorya BIOS")
 envs.gpu.set(1, 2, border_chars[1])
 envs.gpu.set(2, 2, border_chars[2]:rep(w-2))
 envs.gpu.set(w, 2, border_chars[3])
-for i=1, h-5 do
+for i=1, h-6 do
 	envs.gpu.set(1, i+2, border_chars[4])
 	envs.gpu.set(w, i+2, border_chars[4])
 end
-envs.gpu.set(1, h-2, border_chars[5])
-envs.gpu.set(2, h-2, border_chars[2]:rep(w-2))
-envs.gpu.set(w, h-2, border_chars[6])
+envs.gpu.set(1, h-3, border_chars[5])
+envs.gpu.set(2, h-3, border_chars[2]:rep(w-2))
+envs.gpu.set(w, h-3, border_chars[6])
 envs.gpu.set(1, h-1, "Use ↑ and ↓ keys to select which entry is highlighted.")
 envs.gpu.set(1, h, "Use ENTER to boot the selected entry.")
-
+local stime = os.time()
+local autosel = true
 local ypos = 1
 local sel = 1
 local function redraw()
-	for i=1, h-5 do
+	envs.gpu.setBackground(envs.cfg.bgcolor)
+	envs.gpu.setForeground(envs.cfg.fgcolor)
+	envs.gpu.fill(1, h-2, w, 1, " ")
+	if (autosel) then
+		envs.gpu.set(1, h-2, "Automatically booting in "..(envs.cfg.timeout-(os.time()-stime)).."s.")
+	end
+	for i=1, h-6 do
 		local entry = envs.boot[ypos+i-1]
 		if not entry then break end
 		local name = entry[1]
@@ -37,20 +46,21 @@ local function redraw()
 			short = short .. string.rep(" ", w-2-#short)
 		end
 		if (sel == ypos+i-1) then
-			envs.gpu.setBackground(0xFFFFFF)
-			envs.gpu.setForeground(0)
+			envs.gpu.setBackground(envs.cfg.fgcolor)
+			envs.gpu.setForeground(envs.cfg.bgcolor)
 		else
-			envs.gpu.setBackground(0)
-			envs.gpu.setForeground(0xFFFFFF)
+			envs.gpu.setBackground(envs.cfg.bgcolor)
+			envs.gpu.setForeground(envs.cfg.fgcolor)
 		end
 		envs.gpu.set(2, i+2, short)
 	end
 end
 redraw()
-
+sel = envs.cfg.default
 while true do
-	local sig, _, key, code = computer.pullSignal()
+	local sig, _, key, code = computer.pullSignal(0.01)
 	if (sig == "key_down") then
+		autosel = false
 		if (key == 0 and code == 200) then
 			sel = sel - 1
 			if (sel < 1) then
@@ -64,7 +74,7 @@ while true do
 			if (sel > #envs.boot) then
 				sel = #envs.boot
 			end
-			if (sel > ypos+h-5) then
+			if (sel > ypos+h-7) then
 				ypos = ypos+1
 			end
 		elseif (key == 13 and code == 28) then
@@ -75,6 +85,12 @@ while true do
 			table.remove(envs.boot[sel], 1)
 			envs.hand[hand](table.unpack(envs.boot[sel]))
 		end
+	end
+	if (((os.time()-stime) >= envs.cfg.timeout) and autosel) then
+		local hand = envs.boot[sel][2]
+		table.remove(envs.boot[sel], 1)
+		table.remove(envs.boot[sel], 1)
+		envs.hand[hand](table.unpack(envs.boot[sel]))
 	end
 	redraw()
 end

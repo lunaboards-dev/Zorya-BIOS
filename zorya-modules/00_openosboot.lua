@@ -14,5 +14,11 @@ end
 envs.hand["openos"] = function(fs, args)
   	function zorya.getMode()return"compat"end
 	computer.getBootAddress = function() return fs end
-	return envs.loadfile(fs, "init.lua")(args)
+	local _oefi = oefi
+	oefi = nil
+	local _zorya = zorya
+	zorya = nil
+	envs.loadfile(fs, "init.lua")(args)
+	oefi = _oefi
+	zorya = _zorya
 end
