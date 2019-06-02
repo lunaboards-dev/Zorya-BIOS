@@ -24,7 +24,7 @@ end
 envs.hand["rescan"] = function(args)
 	envs.boot = {}
 	scan()
-	envs.boot[#envs.boot+1] = {"Update Zorya and Init Modules", "netboot", "https://raw.githubusercontent.com/Adorable-Catgirl/Zorya-BIOS/master/update/setup.lua", {envs.device}}
+	envs.boot[#envs.boot+1] = {"Update Zorya and Init Modules", "netboot", "https://raw.githubusercontent.com/Adorable-Catgirl/Zorya-BIOS/master/update/install.lua", {envs.device}}
 	envs.boot[#envs.boot+1] = {"Rescan for OSes", "rescan", ""}
 	envs.cfg.boot_entries = envs.boot
 	local hand = fs.open("zorya-cfg/.zoryarc", "w")
