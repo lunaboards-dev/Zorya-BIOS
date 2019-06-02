@@ -2,9 +2,9 @@ local characters = {
 	"╔", "╗", "═", "║", "╚", "╝"
 }
 local args = {...}
+local computer = computer or require("computer")
 local fsaddr = args[1] or computer.getBootAddress()
 local component = component or require("component")
-local computer = computer or require("computer")
 local proxy, list = component.proxy, component.list
 local gpu = proxy(list("gpu")())
 if (not gpu.getScreen()) then
