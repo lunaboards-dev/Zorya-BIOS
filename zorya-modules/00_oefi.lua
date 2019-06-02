@@ -1,5 +1,6 @@
 --This simply adds OEFI support where there wasn't before. Also adds our zorya lib.
 local component = component or require("component")
+local computer = computer
 local envs = ...
 
 oefi = {}
@@ -88,4 +89,10 @@ function zorya.removeEntry(id)
 	hand = component.invoke(envs.device, "open", "zorya-cfg/.zoryarc", "w")
 	component.invoke(envs.device, "write", hand, str)
 	component.invoke(envs.device, "close", hand)
+end
+
+oefi.zorya = {}
+
+function oefi.zorya.loadfile(path)
+	return envs.loadfile(computer.getBootAddress(), path)
 end

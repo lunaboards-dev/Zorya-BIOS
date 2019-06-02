@@ -2,7 +2,7 @@ local c,s,_x,d=component or require("component"),string,"%.2x",computer
 local i,l,p,ps=c.invoke,c.list,c.proxy,d.pullSignal
 local sr,sf,sb=s.rep,s.format,s.byte
 _G._BOOT="Zorya"
-_G._ZVER=1.0
+_G._ZVER=1.1
 local t=function(f,h)local b=""local d,r=i(f,"read",h,math.huge)if not d and r then e(r)end;b=d;while d do local d,r=i(f,"read",h,math.huge)b=b..(d or "")if(not d)then break end;end;i(f,"close",h)return b;end;
 local ed=function(d, f)for c in l(d)do if f(c)then break end end;end
 local function b2a(data)return sf(sf("%s-%s%s",sr(_x, 4),sr(_x.._x.."-",3),sr(_x,6)),sb(data, 1,#data))end
@@ -38,7 +38,7 @@ local eeprom=p(l("eeprom")())
 local dat = eeprom.getData()
 local addr
 if (dat ~= "") then
-  addr = b2a(dat:sub(19+dat:byte(18), 34+dat:byte(18)))
+  addr = b2a(dat:sub(20+dat:byte(18), 35+dat:byte(18)))
 else
   ed("filesystem", function(dev)
     if (i(dev, "isDirectory", "zorya-modules")) then

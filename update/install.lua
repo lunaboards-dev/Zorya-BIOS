@@ -23,7 +23,7 @@ local w, h = gpu.getViewport()
 gpu.fill(1, 2, w, h-1, " ")
 gpu.setBackground(5, true)
 gpu.fill(1, 1, w, 1, " ")
-local title = "Zorya Installer v1.0"
+local title = "Zorya Installer v1.1"
 local spos = (w/2)-(#title/2)
 gpu.setForeground(1, true)
 gpu.set(spos, 1, title)
@@ -137,7 +137,7 @@ function hexid_to_binid(addr)
   return baddr
 end
 eeprom.setData(string.char(2)..string.char(0):rep(17)..hexid_to_binid(fs.address).."F"..string.char(0):rep(64-16))
-eeprom.setLabel("Zorya BIOS v1.0")
+eeprom.setLabel("Zorya BIOS v1.1")
 setBar(100)
 setStatus("Rebooting in 5 seconds...")
 computer = computer or require("computer")
