@@ -22,7 +22,7 @@ envs.gpu.set(2, h-3, border_chars[2]:rep(w-2))
 envs.gpu.set(w, h-3, border_chars[6])
 envs.gpu.set(1, h-1, "Use ↑ and ↓ keys to select which entry is highlighted.")
 envs.gpu.set(1, h, "Use ENTER to boot the selected entry.")
-local stime = os.time()
+local stime = computer.uptime()
 local autosel = true
 local ypos = 1
 local sel = 1
@@ -31,7 +31,7 @@ local function redraw()
 	envs.gpu.setForeground(envs.cfg.fgcolor)
 	envs.gpu.fill(1, h-2, w, 1, " ")
 	if (autosel) then
-		envs.gpu.set(1, h-2, "Automatically booting in "..(envs.cfg.timeout-(os.time()-stime)).."s.")
+		envs.gpu.set(1, h-2, "Automatically booting in "..(envs.cfg.timeout-(computer.uptime()-stime)).."s.")
 	end
 	for i=1, h-6 do
 		local entry = envs.boot[ypos+i-1]
@@ -86,7 +86,7 @@ while true do
 			envs.hand[hand](table.unpack(envs.boot[sel]))
 		end
 	end
-	if (((os.time()-stime) >= envs.cfg.timeout) and autosel) then
+	if (((computer.uptime()-stime) >= envs.cfg.timeout) and autosel) then
 		local hand = envs.boot[sel][2]
 		table.remove(envs.boot[sel], 1)
 		table.remove(envs.boot[sel], 1)
