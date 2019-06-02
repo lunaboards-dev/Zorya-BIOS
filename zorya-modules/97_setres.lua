@@ -1,6 +1,6 @@
 local args = {...}
 local envs = args[1]
-envs.scan[#envs.scan+1] = function(envs)
+envs.scan[#envs.scan+1] = function()
 	envs.cfg.gpuset = {}
 	envs.cfg.gpuset.x, envs.cfg.gpuset.y = envs.gpu.getViewport()
 end
