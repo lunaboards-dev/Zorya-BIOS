@@ -41,6 +41,7 @@ if (not fs.exists("zorya-cfg/.zoryarc")) then
 	envs.boot[#envs.boot+1] = {"Rescan for OSes", "rescan", ""}
 	local hand = fs.open("zorya-cfg/.zoryarc", "w")
 	local str = pretty({boot_entries=envs.boot,timeout=10,default=1,bgcolor=0,fgcolor=0xFFFFFF}, "\n", "    ", " ", json.encode)
+	envs.cfg = {boot_entries=envs.boot,timeout=10,default=1,bgcolor=0,fgcolor=0xFFFFFF}
 	fs.write(hand, str)
 	fs.close(hand)
 else
