@@ -59,6 +59,7 @@ envs.hand = {}
 envs.boot = {}
 envs.args = {}
 envs.scan = {}
+envs.set = {}
 envs.net = inet
 envs.gpu = gpu
 envs.cls = cls

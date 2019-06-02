@@ -31,20 +31,26 @@ envs.hand["rescan"] = function(args)
 	local str = pretty(envs.cfg, "\n", "    ", " ", json.encode)
 	fs.write(hand, str)
 	fs.close(hand)
+	for i=1, #envs.set do
+		envs.set[i](envs)
+	end
 end
 
 --Just check for our config files. Also, this file is loaded second to
 --last, so we can both make a .zoryarc and/or replace the boot list.
 
 if (not fs.exists("zorya-cfg/.zoryarc")) then
+	envs.cfg = {boot_entries=envs.boot,timeout=10,default=1,bgcolor=0,fgcolor=0xFFFFFF}
 	scan()
 	envs.boot[#envs.boot+1] = {"Update Zorya and Init Modules", "netboot", "https://raw.githubusercontent.com/Adorable-Catgirl/Zorya-BIOS/master/update/install.lua", {envs.device}}
 	envs.boot[#envs.boot+1] = {"Rescan for OSes", "rescan", ""}
 	local hand = fs.open("zorya-cfg/.zoryarc", "w")
 	local str = pretty({boot_entries=envs.boot,timeout=10,default=1,bgcolor=0,fgcolor=0xFFFFFF}, "\n", "    ", " ", json.encode)
-	envs.cfg = {boot_entries=envs.boot,timeout=10,default=1,bgcolor=0,fgcolor=0xFFFFFF}
 	fs.write(hand, str)
 	fs.close(hand)
+	for i=1, #envs.set do
+		envs.set[i](envs)
+	end
 else
 	local hand = fs.open("zorya-cfg/.zoryarc", "r")
 	local dat = fs.read(hand, math.huge)
@@ -52,4 +58,7 @@ else
 	envs.cfg = cfg
 	envs.boot = cfg.boot_entries
 	fs.close(hand)
+		for i=1, #envs.set do
+		envs.set[i](envs)
+	end
 end
