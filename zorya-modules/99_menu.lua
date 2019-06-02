@@ -31,7 +31,7 @@ local function redraw()
 	envs.gpu.setForeground(envs.cfg.fgcolor)
 	envs.gpu.fill(1, h-2, w, 1, " ")
 	if (autosel) then
-		envs.gpu.set(1, h-2, "Automatically booting in "..(envs.cfg.timeout-(computer.uptime()-stime)).."s.")
+		envs.gpu.set(1, h-2, "Automatically booting in "..math.floor(envs.cfg.timeout-(computer.uptime()-stime)).."s.")
 	end
 	for i=1, h-6 do
 		local entry = envs.boot[ypos+i-1]

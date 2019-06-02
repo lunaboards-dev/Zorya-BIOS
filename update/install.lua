@@ -1,3 +1,4 @@
+--pastebin installer: HW3rz1gt
 local characters = {
 	"╔", "╗", "═", "║", "╚", "╝"
 }
@@ -143,6 +144,7 @@ setStatus("Rebooting in 5 seconds...")
 computer = computer or require("computer")
 local stime = computer.uptime()
 while true do
+	setStatus("Rebooting in "..math.floor(5-(computer.uptime()-stime)).." seconds...")
 	if (computer.uptime()-stime > 5) then
 		computer.shutdown(true)
 	end
