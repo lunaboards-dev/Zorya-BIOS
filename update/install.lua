@@ -2,6 +2,7 @@ local characters = {
 	"╔", "╗", "═", "║", "╚", "╝"
 }
 local args = {...}
+local fsaddr = args[1] or computer.getBootAddress()
 local component = component or require("component")
 local computer = computer or require("computer")
 local proxy, list = component.proxy, component.list
@@ -105,7 +106,7 @@ end
 setStatus("Setting up directories...")
 setBar(100)
 
-local fs = proxy(computer.getBootAddress())
+local fs = proxy(fsaddr)
 mkdir(fs,"zorya-modules")
 mkdir(fs,"zorya-cfg")
 
