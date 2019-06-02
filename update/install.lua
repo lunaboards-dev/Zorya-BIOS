@@ -2,22 +2,32 @@ local characters = {
 	"╔", "╗", "═", "║", "╚", "╝"
 }
 local args = {...}
-local fsaddr = args[1] or computer.getBootAddress()
 local component = component or require("component")
+local computer = computer or require("computer")
 local proxy, list = component.proxy, component.list
 local gpu = proxy(list("gpu")())
-gpu.bind(list("screen")())
-gpu.setBackground(0x0000FF)
+if (not gpu.getScreen()) then
+	gpu.bind(list("screen")())
+end
+--Load palette
+gpu.setPaletteColor(0, 0x000000)
+gpu.setPaletteColor(1, 0xFFFFFF)
+gpu.setPaletteColor(2, 0x4444FF)
+gpu.setPaletteColor(3, 0xFF7F44)
+gpu.setPaletteColor(4, 0x00007F)
+gpu.setPaletteColor(5, 0x7F00FF)
+gpu.setPaletteColor(6, 0x595959)
+gpu.setBackground(0, true)
 local w, h = gpu.getViewport()
 gpu.fill(1, 2, w, h-1, " ")
-gpu.setBackground(0xFFFF00)
+gpu.setBackground(5, true)
 gpu.fill(1, 1, w, 1, " ")
 local title = "Zorya Installer v1.0"
 local spos = (w/2)-(#title/2)
-gpu.setForeground(0x0000FF)
+gpu.setForeground(1, true)
 gpu.set(spos, 1, title)
-gpu.setForeground(0xFFFFFF)
-gpu.setBackground(0xFF0000)
+gpu.setForeground(1, true)
+gpu.setBackground(5, true)
 gpu.fill(6,6,w-12,h-12, " ")
 gpu.set(6,6,characters[1])
 gpu.set(w-6,6,characters[2])
@@ -28,15 +38,15 @@ gpu.fill(7,h-6,w-13,1,characters[3])
 gpu.fill(6,7,1,h-13,characters[4])
 gpu.fill(w-6,7,1,h-13,characters[4])
 function setStatus(stat)
-	gpu.setBackground(0xFF0000)
-	gpu.setForeground(0xFFFFFF)
+	gpu.setBackground(5, true)
+	gpu.setForeground(1, true)
 	gpu.fill(7,(h/2)-3, w-13, 1, " ")
 	gpu.set((w/2)-(#stat/2), (h/2)-3, stat)
 end
 function setBar(pos)
-	gpu.setBackground(0x7F7F7F)
+	gpu.setBackground(6, true)
 	gpu.fill(8, (h/2)+1, w-16, 1, " ")
-	gpu.setBackground(0x0000FF)
+	gpu.setBackground(2, true)
 	gpu.fill(8, (h/2)+1, ((w-16)/100)*pos, 1, " ")
 end
 
@@ -95,7 +105,7 @@ end
 setStatus("Setting up directories...")
 setBar(100)
 
-local fs = proxy(fsaddr)
+local fs = proxy(computer.getBootAddress())
 mkdir(fs,"zorya-modules")
 mkdir(fs,"zorya-cfg")
 
@@ -117,27 +127,24 @@ local eeprom = proxy(list("eeprom")())
 eeprom.set(bios)
 setStatus("Writing configuration data...")
 setBar(66)
-function hexid_to_binid(id)
-  id = id:gsub("%-", "")
-  local lasthex = 0
-  local match = ""
-  local bstr = ""
-  for i=1, 32, 2 do
-    match = id:sub(i, i+1)
-    bstr = bstr .. string.char(tonumber(match, 16))
+function hexid_to_binid(addr)
+  addr=addr:gsub("%-", "")
+  local baddr = ""
+  for i=1, #addr, 2 do
+    baddr = baddr .. string.char(tonumber(addr:sub(i, i+1), 16))
   end
-  return bstr
+  return baddr
 end
-eeprom.setData(string.char(2)..string.char(0):rep(17)..hexid_to_binid(fs.address)..string.char(0):rep(64-16))
+eeprom.setData(string.char(2)..string.char(0):rep(17)..hexid_to_binid(fs.address).."F"..string.char(0):rep(64-16))
 eeprom.setLabel("Zorya BIOS v1.0")
 setBar(100)
 setStatus("Rebooting in 5 seconds...")
 computer = computer or require("computer")
-local stime = os.time()
+local stime = computer.uptime()
 while true do
-	if (os.time()-stime > 5) then
+	if (computer.uptime()-stime > 5) then
 		computer.shutdown(true)
 	end
 	computer.pullSignal(0.01)
-	setBar((os.time()-stime)*20)
+	setBar((computer.uptime()-stime)*20)
 end
