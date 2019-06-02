@@ -38,7 +38,7 @@ local eeprom=p(l("eeprom")())
 local dat = eeprom.getData()
 local addr
 if (dat ~= "") then
-  addr = b2a(dat:sub(20+dat:byte(18), 35+dat:byte(18)))
+  addr = b2a(dat:sub(19+dat:byte(18), 34+dat:byte(18)))
 else
   ed("filesystem", function(dev)
     if (i(dev, "isDirectory", "zorya-modules")) then
