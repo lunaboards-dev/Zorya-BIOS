@@ -68,10 +68,12 @@ envs.cls = cls
 envs.status = status
 envs.loadfile = loadfile
 envs.device = zy.address
-for _, file in ipairs(zy.list("zorya-modules")) do
+local tbl = zy.list("zorya-modules")
+table.sort(tbl)
+for _, file in ipairs(tbl) do
 	status("Loading zorya-modules/"..file)
 	if (file ~= "boot.lua") then
 		local func, err = loadfile(zy.address, "zorya-modules/"..file)
-		if not func then status(err) else func(envs)end
+		if not func then error(err) else func(envs)end
 	end
 end
