@@ -9,7 +9,7 @@ envs.scan[#envs.scan+1] = function()
 				for i=1, #subdir do
 					if (comp.invoke(fs, "isDirectory", "boot/kernel/"..subdir[i])) then
 						if (comp.invoke(fs, "exists", "boot/kernel/"..subdir[i].."kernel.lua")) then
-							envs.boot[#env.boot+1] = {"Kernel "..subdir[i]:sub(1, #subdir[i]-1).." on "..(comp.invoke(fs, "getLabel") or fs:sub(1, 3)), "tsuki", fs, subdir[i]:sub(1, #subdir[i]-1), {"vidpreinit"}}
+							envs.boot[#env.boot+1] = {"Kernel "..subdir[i]:sub(1, #subdir[i]-1).." on "..(comp.invoke(fs, "getLabel") or fs:sub(1, 3)), "tsuki", fs, subdir[i]:sub(1, #subdir[i]-1), {"novbind", "nomodeset", "bootaddr="..fs}}
 						end
 					end
 				end

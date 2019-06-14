@@ -34,12 +34,12 @@ if (modem) then
 			modem.setPower(envs.cfg.power)
 		end
 		modem.open(9900)
-		modem.broadcast(9900, app)
+		modem.broadcast(9900, 0, app)
 		local dat = {}
 		while true do
 			local evt = {computer.pullSignal()}
-			if (evt[1] == "modem_message" and evt[3] == 9900) then
-				local mdat = evt[5]
+			if (evt[1] == "modem_message" and evt[3] == 9900 and evt[5] == 1) then
+				local mdat = evt[6]
 				local msg_num = mdat:byte(1)
 				local msg_max = mdat:byte(2)
 				dat[msg_num+1] = mdat:sub(3)

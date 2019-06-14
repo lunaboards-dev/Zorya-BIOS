@@ -1,0 +1,2 @@
+# OpenOS Boot
+This module provides the facility to boot the OpenOS (or compatible) opperating system. This is also known as "compatibiliy mode" or "CSM". Loading an OS with this module will disable the `oefi` and `zorya` libraries. Behavior after returning to the bootloader is undefined.
