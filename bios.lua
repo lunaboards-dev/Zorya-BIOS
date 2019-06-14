@@ -5,6 +5,7 @@ xpcall(function()
 	if (data) then
 		data = cproxy(data)
 		if not data.ecdsa then
+			_BSIGN=true
 			data = nil
 		else
 			skey = data.deserializeKey(skey, "ec-public")
