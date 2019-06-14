@@ -11,6 +11,12 @@ local fs = component.proxy(envs.device)
 
 --envs.boot[#envs.boot+1] = {"Zorya BIOS configuration", "cfg", {}}
 
+function envs.start(id)
+	local hand = envs.boot[sel][2]
+	table.remove(envs.boot[sel], 1)
+	table.remove(envs.boot[sel], 1)
+	return envs.hand[hand](table.unpack(envs.boot[sel]))
+end
 function scan()
 	for i=1, #envs.scan do
 		envs.scan[i]()

@@ -1,9 +1,9 @@
 --This simply adds OEFI support where there wasn't before. Also adds our zorya lib.
-local component = component or require("component")
+local component = component
 local computer = computer
 local envs = ...
 
-oefi = {}
+local oefi = {}
 
 function oefi.getApplications()
 	local apps = {}
@@ -21,7 +21,7 @@ function oefi.getApplications()
 end
 
 function oefi.getAPIVersion()
-	return 2
+	return 1
 end
 
 function oefi.getImplementationName()
@@ -37,7 +37,7 @@ function oefi.returnToOEFI()
 end
 
 function oefi.execOEFIApp(fs, path, args)
-	return envs.loadfile(fs,path)(args)
+	return envs.loadfile(fs,path)(oefi, args)
 end
 
 function zorya.getVersion()
@@ -95,4 +95,29 @@ oefi.zorya = {}
 
 function oefi.zorya.loadfile(path)
 	return envs.loadfile(computer.getBootAddress(), path)
+end
+
+--oefi.loadfile = oefi.loadfile
+
+function zorya.rescanEntries()
+	envs.hands["rescan"]()
+end
+
+envs.scan[#envs.scan+1] = function()
+	for fs in component.list("filesystem") do
+		if (component.invoke(fs, "isDirectory", ".efi")) then
+			for _,file in ipairs(component.invoke(fs, "list", ".efi")) do
+				if (file:match("%.efi$")) then
+					envs.boot[#envs.boot+1] = {"OEFI("..fs:sub(3).."):"..file, "oefi", fs, ".efi/"..file, {}}
+				end
+			end
+		end
+	end
+end
+
+envs.hand["oefi"] = function(fs, file, args)
+	function computer.getBootAddress()return fs end
+	function computer.setBootAddress()end
+    function zorya.getMode()return"oefi"end
+	oefi.execOEFIApp(fs, file, args)
 end

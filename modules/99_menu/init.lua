@@ -4,7 +4,7 @@ local envs = args[1]
 local border_chars = {
 	"┌", "─", "┐", "│", "└", "┘"
 }
-local w, h = envs.w, envs.h
+local w, h = envs.gpu.getViewport()
 envs.gpu.setBackground(envs.cfg.bgcolor)
 envs.gpu.setForeground(envs.cfg.fgcolor)
 envs.cls()
@@ -80,17 +80,11 @@ while true do
 		elseif (key == 13 and code == 28) then
 			envs.gpu.setBackground(0)
 			envs.gpu.setForeground(0xFFFFFF)
-			local hand = envs.boot[sel][2]
-			table.remove(envs.boot[sel], 1)
-			table.remove(envs.boot[sel], 1)
-			envs.hand[hand](table.unpack(envs.boot[sel]))
+			envs.start(sel)
 		end
 	end
 	if (((computer.uptime()-stime) >= envs.cfg.timeout) and autosel) then
-		local hand = envs.boot[sel][2]
-		table.remove(envs.boot[sel], 1)
-		table.remove(envs.boot[sel], 1)
-		envs.hand[hand](table.unpack(envs.boot[sel]))
+		envs.start(sel)
 	end
 	redraw()
 end
