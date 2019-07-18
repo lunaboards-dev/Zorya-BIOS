@@ -24,6 +24,7 @@ local function establish_connection(dev, ...)
 end
 
 envs.hand["netboot"] = function(svc, args)
+	
 	if svc == "" then
 		while true do
 			envs.cls()

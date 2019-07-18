@@ -4,7 +4,7 @@ local envs = args[1]
 local border_chars = {
 	"┌", "─", "┐", "│", "└", "┘"
 }
-local w, h = envs.w, envs.h
+local w, h = envs.gpu.getViewport()
 envs.gpu.setBackground(envs.cfg.bgcolor)
 envs.gpu.setForeground(envs.cfg.fgcolor)
 envs.cls()

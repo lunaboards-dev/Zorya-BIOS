@@ -96,3 +96,9 @@ oefi.zorya = {}
 function oefi.zorya.loadfile(path)
 	return envs.loadfile(computer.getBootAddress(), path)
 end
+
+oefi.loadfile = oefi.loadfile
+
+function zorya.rescanEntries()
+	envs.hands["rescan"]()
+end
