@@ -21,7 +21,7 @@ function oefi.getApplications()
 end
 
 function oefi.getAPIVersion()
-	return 2
+	return 1
 end
 
 function oefi.getImplementationName()
