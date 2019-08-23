@@ -16,7 +16,7 @@ OEFI library support:
 | Method | Status | Notes |
 | --- | --- | --- |
 | `oefi.getApplications()` | Supported |  |
-| `oefi.getAPIVersion()` | Supported | Returns 2. |
+| `oefi.getAPIVersion()` | Supported | Returns 1. |
 | `oefi.getImplementationName()` | Supported | Returns `Zorya BIOS` |
 | `oefi.getImplementationVersion()` | Supported | Returns the version of the Zorya bootloader |
 | `oefi.returnToOEFI()` | Implemented | Will forcefully reboot. |
