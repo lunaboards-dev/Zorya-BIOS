@@ -2,7 +2,8 @@ local c,s,_x,d=component or require("component"),string,"%.2x",computer
 local i,l,p,ps=c.invoke,c.list,c.proxy,d.pullSignal
 local sr,sf,sb=s.rep,s.format,s.byte
 _G._BOOT="Zorya"
-_G._ZVER=1.1
+_G._ZVER=1.2
+_G._ZPAT=0
 local t=function(f,h)local b=""local d,r=i(f,"read",h,math.huge)if not d and r then e(r)end;b=d;while d do local d,r=i(f,"read",h,math.huge)b=b..(d or "")if(not d)then break end;end;i(f,"close",h)return b;end;
 local ed=function(d, f)for c in l(d)do if f(c)then break end end;end
 local function b2a(data)return sf(sf("%s-%s%s",sr(_x, 4),sr(_x.._x.."-",3),sr(_x,6)),sb(data, 1,#data))end

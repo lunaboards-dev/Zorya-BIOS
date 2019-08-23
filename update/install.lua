@@ -24,7 +24,7 @@ local w, h = gpu.getViewport()
 gpu.fill(1, 2, w, h-1, " ")
 gpu.setBackground(5, true)
 gpu.fill(1, 1, w, 1, " ")
-local title = "Zorya Installer v1.1"
+local title = "Zorya Installer v1.2.0"
 local spos = (w/2)-(#title/2)
 gpu.setForeground(1, true)
 gpu.set(spos, 1, title)
