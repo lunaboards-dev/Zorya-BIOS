@@ -60,7 +60,7 @@ local files = {
 	{"Adorable-Catgirl/Zorya-BIOS/master/zorya-modules/00_openosboot.lua", "zorya-modules/00_openosboot.lua"},
 	{"Adorable-Catgirl/Zorya-BIOS/master/zorya-modules/01_p9kboot.lua", "zorya-modules/01_p9kboot.lua"},
 	{"Adorable-Catgirl/Zorya-BIOS/master/zorya-modules/02_tsukiboot.lua", "zorya-modules/02_tsukiboot.lua"},
-	{"Adorable-Catgirl/Zorya-BIOS/master/zorya-modules/95_oefiboot.lua", "zorya-modules/95_oefiboot.lua"},
+	--{"Adorable-Catgirl/Zorya-BIOS/master/zorya-modules/95_oefiboot.lua", "zorya-modules/95_oefiboot.lua"},
 	{"Adorable-Catgirl/Zorya-BIOS/master/zorya-modules/97_netboot.lua", "zorya-modules/97_netboot.lua"},
 	{"Adorable-Catgirl/Zorya-BIOS/master/zorya-modules/98_config.lua", "zorya-modules/98_config.lua"},
 	{"Adorable-Catgirl/Zorya-BIOS/master/zorya-modules/99_menu.lua", "zorya-modules/99_menu.lua"},
