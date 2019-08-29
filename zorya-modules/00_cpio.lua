@@ -1,9 +1,7 @@
-
 zorya.cpio = {}
 local comp = component
 local component = comp
 local bit32 = bit32
-
 
 local function readint(fs, handle, amt, rev)
     local tmp = 0
@@ -100,10 +98,14 @@ local function cpio_index(self, file)
 	return dat
 end
 
+function cpio:close()
+	self.__fs.close(self.__handle)
+end
 
 --- Load the cpio into a table. If value is true, then key is a directory, otherwise value is a string and key corresponds
 --- to a file
 function zorya.cpio.load(fs, path)
-	local arc = {}
-	return setmetatable({__fs=component.proxy(fs), __handle=fs.open(path, "r")}, {__index=cpio_index})
+	local arc = {__fs=component.proxy(fs)}
+	arc.__handle=fs.open(path, "r")
+	return setmetatable(arc, {__index=cpio_index})
 end
