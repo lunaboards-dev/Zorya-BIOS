@@ -33,10 +33,10 @@ OEFI2 library support:
 | `oefi.getImplementationName()` | Supported | Returns `Zorya BIOS` |
 | `oefi.getImplementationVersion()` | Supported | Returns the version of the Zorya bootloader |
 | `oefi.returnToOEFI()` | Implemented | Will forcefully reboot. |
-| `oefi.execOEFIApp(drive, path)` | Unsupported | Will be supported soon |
+| `oefi.execOEFIApp(drive, path)` | Supported |  |
 | `oefi.getBootAddress()` | Supported | Returns boot address |
 | `oefi.loadfile(path)` | Supported |  |
-| `oefi.loadInternalFile(path)` | Unsupported | Will be supported soon |
+| `oefi.loadInternalFile(path)` | Supported |  |
 | `oefi.setApplications(app)` | Implemented | Does nothing yet. |
 | `oefi.getExtensions()` | Supported | Haves `ZoryaBIOS_GetEntries_1`, `ZoryaBIOS_AddEntry_1` and `ZoryaBIOS_RemoveEntry_1` |
 | `oefi.getImplementationName()` | Supported | Returns `Zorya BIOS` |
