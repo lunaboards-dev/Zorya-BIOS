@@ -9,7 +9,7 @@ An advanced BIOS for OpenComputers. There are two ways to install/update:
 The Zorya BIOS comes built in with support for booting OpenOS, Plan9k, and Tsuki Kernel. Other OSes can install their own boot modules. The BIOS also has support for network booting and booting Netinstall scripts. Also OEFI compliant.
 
 ## OEFI Compliance
-Zorya is *almost* OEFI complient. Report any problems with OEFI.
+Zorya is *almost* OEFI and OEFI2.1 complient. Report any problems with OEFI.
 
 OEFI library support:
 
@@ -23,6 +23,23 @@ OEFI library support:
 | `oefi.execOEFIApp(drive, path)` | Supported |  |
 | `computer.getBootAddress()` | Sometimes supported | Only defined when booting OpenOS or a similar OS. Tsuki kernel does not have this set. (It uses the `bootaddr` argument.) |
 | `computer.setBootAddress(addr)` | Supported | Does nothing. |
+
+OEFI2 library support:
+
+| Method | Status | Notes |
+| --- | --- | --- |
+| `oefi.getApplications()` | Supported |  |
+| `oefi.getAPIVersion()` | Supported | Returns 2.1 |
+| `oefi.getImplementationName()` | Supported | Returns `Zorya BIOS` |
+| `oefi.getImplementationVersion()` | Supported | Returns the version of the Zorya bootloader |
+| `oefi.returnToOEFI()` | Implemented | Will forcefully reboot. |
+| `oefi.execOEFIApp(drive, path)` | Unsupported | Will be supported soon |
+| `oefi.getBootAddress()` | Supported | Returns boot address |
+| `oefi.loadfile(path)` | Supported |  |
+| `oefi.loadInternalFile(path)` | Unsupported | Will be supported soon |
+| `oefi.setApplications(app)` | Implemented | Does nothing yet. |
+| `oefi.getExtensions()` | Supported | Haves `ZoryaBIOS_GetEntries_1`, `ZoryaBIOS_AddEntry_1` and `ZoryaBIOS_RemoveEntry_1` |
+| `oefi.getImplementationName()` | Supported | Returns `Zorya BIOS` |
 
 Zorya also extends OEFI with a few extra methods:
 
