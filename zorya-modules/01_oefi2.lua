@@ -122,6 +122,19 @@ function oefi2.returnToOEFI()
 	computer.shutdown(true)
 end
 
+function oefi2.loadInternalFile(path)
+	return cpio[path]
+end
+
+local boot
+function oefi2.execOEFIApp(drive, path, args)
+	boot = drive
+	
+	readCpio(drive, path)
+	local chunk = load(cpio["app.exe"])()
+	chunk(args)
+end
+
 function oefi2.getApplications()
 	local apps = {}
 	for fs in component.list("filesystem") do
@@ -137,7 +150,10 @@ function oefi2.getApplications()
 	return apps
 end
 
-local boot
+function oefi2.getBootAddress()
+	return boot
+end
+
 function oefi2.loadfile(path)
 	return envs.loadfile(boot, path)
 end
@@ -168,15 +184,8 @@ envs.scan[#envs.scan+1] = function()
 end
 
 envs.hand["oefi2"] = function(fs, file, args)
-	boot = fs
-	function oefi2.getBootAddress()
-		return fs
-	end
-
 	oefi = oefi2
 	oefi2 = nil -- clean oefi2
 
-	readCpio(fs, file)
-	local chunk = load(cpio["app.exe"])()
-	chunk(args)
+	oefi.execOEFIApp(fs, file, args)
 end
