@@ -101,6 +101,7 @@ envs.scan[#envs.scan+1] = function()
 								end
 							end
 						end
+						cpio:close()
 					end
 				end
 			end
