@@ -50,7 +50,7 @@ Zorya also extends OEFI with a few extra methods:
 | `zorya.getVersion()` | `number` | The same as `_ZVER` |
 | `zorya.getEntryID()` | `number` | Returns the entry ID of the booted entry. |
 | `zorya.removeEntry(id:number)` | nothing | Removes an entry from the zoryarc file. |
-| `zorya.getMode()` | `string` | Returns `zorya`, `oefi`, `compat`, `fallback`, or `error` |
+| `zorya.getMode()` | `string` | Returns `zorya`, `oefi`, `oefi2`, `compat`, `fallback`, or `error` |
 
 **Note**: Only `zorya.getMode()` is available in fallback mode.
 
@@ -61,6 +61,9 @@ Zorya also extends OEFI with a few extra methods:
 
 ### OEFI Mode
 OEFI mode is when Zorya has loaded an application from the OEFI module. This may result in instability as Zorya is not 100% compliant. Also provides the Zorya library.
+
+### OEFI2 Mode
+OEFI2 mode is when Zorya loaded an application from an OEFIv2.1 module. See above for notes about OEFI.
 
 ### Compatibility mode
 Compatibility mode is engaged when Zorya loads an OS from `init.lua`. This disables the OEFI and most of the Zorya libraries. Mostly used for OpenOS and compatible OSes. Still may expose advanced features to the OS via virtual devices (overriding the component library)

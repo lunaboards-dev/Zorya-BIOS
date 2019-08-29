@@ -109,8 +109,12 @@ envs.scan[#envs.scan+1] = function()
 end
 
 envs.hand["oefi2"] = function(fs, file, args)
+	local _oefi = oefi
+	local _oefi2 = oefi2
 	oefi = oefi2
 	oefi2 = nil -- clean oefi2
-
+	function zorya.getMode()return "oefi2"end
 	oefi.execOEFIApp(fs, file, args)
+	oefi = _oefi
+	oefi2 = _oefi2
 end
