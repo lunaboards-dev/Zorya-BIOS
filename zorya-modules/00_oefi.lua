@@ -108,9 +108,9 @@ function zorya.rescanEntries()
 end
 
 envs.scan[#envs.scan+1] = function()
-	for fs in comp.list("filesystem") do
-		if (comp.invoke(fs, "isDirectory", ".efi")) then
-			for _,file in ipairs(comp.invoke(fs, "list", ".efi")) do
+	for fs in component.list("filesystem") do
+		if (component.invoke(fs, "isDirectory", ".efi")) then
+			for _,file in ipairs(component.invoke(fs, "list", ".efi")) do
 				if (file:match("%.efi$")) then
 					envs.boot[#envs.boot+1] = {"OEFI("..fs:sub(1,3).."):"..file, "oefi", fs, ".efi/"..file, {}}
 				end
